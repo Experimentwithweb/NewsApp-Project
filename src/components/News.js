@@ -38,63 +38,33 @@ capitalizeFirstLetter=(string)=> {
 
 /*Below function fetch News articles by making API request in JSON format and stores it in "articles" array */
 async componentDidMount(){
+        this.props.setProgress(0);
         let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d1d6eb7662d94253b58aec5f44ed13cb&page=1&pageSize=${this.props.pageSize}`
         console.log(url)
         this.setState({loading:true})
         let data = await fetch(url)
+        this.props.setProgress(30);
         let parsedData= await data.json()
+        this.props.setProgress(60);
         this.setState({loading:false})
         this.setState({articles:parsedData.articles,totalResults:parsedData.totalResults})
+        this.props.setProgress(100);
       }
-
-/*Below function fetch News articles for previous pages by making API request in JSON format and stores it in "articles" array */
- handlePrevClick =async()=>{
-        console.log("Previous")
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d1d6eb7662d94253b58aec5f44ed13cb&page=${this.state.page-1}&pageSize=${this.props.pageSize}`
-        console.log(url)
-        this.setState({loading:true})
-        let data = await fetch(url)
-        let parsedData= await data.json()
-        this.setState({loading:false})
-        this.setState(
-          {
-            page:this.state.page-1,
-            articles:parsedData.articles
-          }
-        ) 
-      }
-
-/*Below function fetch News articles for Next pages by making API request in JSON format and stores it in "articles" array */
- handleNextClick =async()=>{
-      if (this.state.page+1 <= Math.ceil(this.state.totalResults/this.props.pageSize)){
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d1d6eb7662d94253b58aec5f44ed13cb&page=${this.state.page+1}&pageSize=${this.props.pageSize}`
-        console.log(url)
-        this.setState({loading:true})
-        let data = await fetch(url)
-        let parsedData= await data.json()
-        this.setState({loading:false})
-        this.setState(
-          {
-            page:this.state.page+1,
-            articles:parsedData.articles
-          }
-        ) 
-    }
-    else{
-    }
-
-    }
 
     fetchMoreData = async() => {
+      this.props.setProgress(0);
       this.setState({page: this.state.page+1})
       const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d1d6eb7662d94253b58aec5f44ed13cb&page=${this.state.page}&pageSize=${this.props.pageSize}`
       console.log(url)
       let data = await fetch(url)
+      this.props.setProgress(30);
       let parsedData= await data.json()
+      this.props.setProgress(60);
       this.setState({
         articles:this.state.articles.concat(parsedData.articles),
         totalResults:parsedData.totalResults,
       })
+      this.props.setProgress(100);
     };
 
   render() {

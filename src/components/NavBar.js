@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-
-
 export class NavBar extends Component {
   
 /*Below snippet creates Navigation menu for various categories like Home,Business,Entertainment, sports, etc on UI */
@@ -28,12 +26,8 @@ export class NavBar extends Component {
                     </div>
                 </div>
           </nav>
-
-                    
-
       </div>
     )
   }
 }
-
 export default NavBar
