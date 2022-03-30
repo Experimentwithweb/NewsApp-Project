@@ -19,19 +19,21 @@ export class News extends Component {
     category:PropTypes.string
   }
   
-  constructor(){
-            super()
+  constructor(props){
+            super(props)
             this.state={
               articles: [] ,
               loading:false,
               page:1
             }
+           document.title=this.props.category;
           }
 
 
 /*Below function fetch News articles by making API request in JSON format and stores it in "articles" array */
 async componentDidMount(){
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=5eaf0a4aa47848a7aec8969864e3c798&page=1&pageSize=${this.props.pageSize}`
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=4e7796b4c5cd474f8515dc9bf2c55b6f&page=1&pageSize=${this.props.pageSize}`
+        console.log(url)
         this.setState({loading:true})
         let data = await fetch(url)
         let parsedData= await data.json()
@@ -42,7 +44,7 @@ async componentDidMount(){
 /*Below function fetch News articles for previous pages by making API request in JSON format and stores it in "articles" array */
  handlePrevClick =async()=>{
         console.log("Previous")
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=5eaf0a4aa47848a7aec8969864e3c798&page=${this.state.page-1}&pageSize=${this.props.pageSize}`
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=4e7796b4c5cd474f8515dc9bf2c55b6f&page=${this.state.page-1}&pageSize=${this.props.pageSize}`
         console.log(url)
         this.setState({loading:true})
         let data = await fetch(url)
@@ -59,7 +61,7 @@ async componentDidMount(){
 /*Below function fetch News articles for Next pages by making API request in JSON format and stores it in "articles" array */
  handleNextClick =async()=>{
       if (this.state.page+1 <= Math.ceil(this.state.totalResults/this.props.pageSize)){
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=5eaf0a4aa47848a7aec8969864e3c798&page=${this.state.page+1}&pageSize=${this.props.pageSize}`
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=4e7796b4c5cd474f8515dc9bf2c55b6f&page=${this.state.page+1}&pageSize=${this.props.pageSize}`
         console.log(url)
         this.setState({loading:true})
         let data = await fetch(url)
